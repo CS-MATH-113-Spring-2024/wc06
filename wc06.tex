@@ -1,8 +1,13 @@
 \documentclass[a4paper]{exam}
 
+\usepackage{amsmath}
 \usepackage[a4paper]{geometry}
-\usepackage{hyperref}
-\usepackage{xcolor}
+
+\usepackage{draftwatermark}
+\SetWatermarkText{Sample Solution}
+\SetWatermarkScale{3}
+\printanswers
+
 
 \header{CS/MATH 113}{WC06: Logical Inference}{Spring 2024}
 \footer{}{Page \thepage\ of \numpages}{}
@@ -42,15 +47,60 @@
   You notice that there are people in Learn Courtyard. Show how you can infer the location of the manual.
 
   \begin{solution}
-    % Enter your solution here.
+    Let us use the following propositions.\\
+    \begin{tabular}{l@{ : }l}
+      $learn$ & there is a hint at Learn Courtyard\\
+      $gym$ & there is a hint at the Gym\\
+      $ehsas$ & your TA is sitting in Ehsas\\
+      $absent$ & your TA is absent\\
+      $people$ & there are people in Learn Courtyard\\
+      $zen$ & the manual is at Zen Garden\\
+      $earth$ & the manual is at Earth Courtyard\\
+      $fire$ & the manual is at Fire Courtyard
+    \end{tabular}
+
+    Then the clues and observations are:
+    \begin{align}
+      learn & \lor gym \label{c1}\\
+      ehsas\lor absent & \implies learn \label{c2}\\
+      \neg ehsas & \implies gym \label{c3}\\
+      people & \implies \neg learn \label{c4}\\
+      learn & \implies zen \label{c5}\\
+      gym & \implies earth \label{c6}\\
+      absent & \implies fire \label{c7}\\
+      people \label{c8}
+    \end{align}
+
+    and we can reason as follows:
+    \begin{align}
+      \neg learn && \text{modus ponens on (\ref{c4}) and (\ref{c8})} \label{c9}\\
+      gym && \text{disjunctive syllogism on (\ref{c1}) and (\ref{c9})} \label{c10}\\
+      earth && \text{modus ponens on (\ref{c6}) and (\ref{c10})} \label{c11}
+    \end{align}
+    Therefore, the manual is at Earth Courtyard.
   \end{solution}
 
 \titledquestion{The Other Side} You are given four cards each of which has a number on one side and a letter on another. You place them on a table in front of you and the four cards read: \texttt{A 5 2 J}. Which cards would you turn over in order to test the following rule? Explain your choice.
       {\quotation Cards with 5 on one side have J on the other side.}
 
   \begin{solution}
-    % Enter your solution here.
-  \end{solution}
+    The rule can be written as: number side is 5 $\implies$ letter side is J.
+
+    To test the rule, we simply need to check cards that match two situations:
+    \begin{enumerate}
+    \item\label{ant} whenever the antecedent is true, the consequent must be true.
+    \item\label{con} whenever the consequent is false, the antecedent must be false.
+    \end{enumerate}
+
+    Let us see how the cards match these situations.
+
+    \begin{description}
+    \item[A] This matches condition \ref{con}. We will turn over the card. If the number on the other side is 5, the rule is broken. If the number is different from 5, the rule holds.
+    \item[5] This matches condition \ref{ant}. We will turn over the card. If the letter on the other side is J, the rule holds. If the letter is different from J, the rule is broken. 
+    \item[2] This does not match any of the conditions. There is no use turning this card. There is no bearing on the rule if the letter on the other side is J or not.
+    \item[J] This does not match any of the conditions. There is no use turning this card. There is no bearing on the rule if the number on the other side is 5 or not.
+    \end{description}
+    \end{solution}
 
   
 \end{questions}
